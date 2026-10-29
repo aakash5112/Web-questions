@@ -1,0 +1,3018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprehensive JavaScript Interview & Revision Suite (75+ Qs)</title>
+  <style>
+    :root {
+      --bg-primary: #0b1120;
+      --bg-secondary: #151f32;
+      --bg-tertiary: #1e293b;
+      --bg-card: #141e33;
+      --border-color: #24344d;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #f43f5e;
+      --accent-purple: #c084fc;
+      --code-bg: #070b14;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      width: 320px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .brand { padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); }
+    .brand h1 { font-size: 1.15rem; font-weight: 700; color: var(--accent-cyan); }
+    .brand p { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.2rem; }
+
+    .nav-search input {
+      width: 100%;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .nav-search input:focus { border-color: var(--accent-cyan); }
+
+    .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.65rem;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: all 0.15s ease;
+    }
+    .nav-link:hover, .nav-link.active { background: var(--bg-tertiary); color: var(--accent-cyan); }
+    .nav-badge {
+      background: var(--bg-primary);
+      color: var(--accent-emerald);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.1rem 0.4rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Main Container */
+    #main-content {
+      flex: 1;
+      padding: 2.5rem 3rem;
+      max-width: 1200px;
+      overflow-x: hidden;
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(52, 211, 153, 0.05));
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .header-banner h2 { font-size: 1.65rem; color: var(--text-primary); margin-bottom: 0.4rem; }
+    .header-banner p { color: var(--text-secondary); font-size: 0.92rem; }
+
+    /* Controls Bar */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding: 0.85rem 1rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .filter-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent-cyan);
+      color: var(--bg-primary);
+      font-weight: 600;
+      border-color: var(--accent-cyan);
+    }
+    .action-btn {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .action-btn:hover { background: #334155; }
+
+    /* Topic Sections */
+    .topic-section { margin-bottom: 3.5rem; scroll-margin-top: 1.5rem; }
+    .topic-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+    .topic-header h3 { font-size: 1.35rem; color: var(--accent-cyan); font-weight: 700; }
+    .topic-tag {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent-cyan);
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    /* Notes Box */
+    .notes-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .notes-box h4 { color: var(--accent-cyan); font-size: 1rem; margin-bottom: 0.6rem; }
+    .notes-box ul, .notes-box ol { margin-left: 1.3rem; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.88rem; }
+    .notes-box li { margin-bottom: 0.3rem; }
+    .notes-box p { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.5rem; }
+
+    /* Question Cards */
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .question-card:hover { border-color: #3b506d; }
+
+    .q-header {
+      padding: 0.8rem 1.1rem;
+      background: rgba(21, 31, 50, 0.8);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .q-title { font-size: 0.92rem; font-weight: 600; color: var(--text-primary); }
+    .badges { display: flex; gap: 0.35rem; }
+    .badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .badge-conceptual { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); border: 1px solid rgba(192, 132, 252, 0.3); }
+    .badge-output { background: rgba(52, 211, 153, 0.15); color: var(--accent-emerald); border: 1px solid rgba(52, 211, 153, 0.3); }
+    .badge-tricky { background: rgba(251, 191, 36, 0.15); color: var(--accent-amber); border: 1px solid rgba(251, 191, 36, 0.3); }
+
+    .q-body { padding: 1.1rem; }
+    .q-text { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+
+    /* Code Blocks */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+      margin: 0.5rem 0;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      color: var(--accent-cyan);
+    }
+    pre code { background: transparent; padding: 0; color: inherit; }
+
+    /* Solution Accordion */
+    details.solution-toggle {
+      margin-top: 0.75rem;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 0.6rem;
+    }
+    details.solution-toggle summary {
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      outline: none;
+    }
+    details.solution-toggle summary:hover { color: var(--accent-emerald); }
+    details.solution-toggle summary::-webkit-details-marker { display: none; }
+    details.solution-toggle summary::before {
+      content: "▶";
+      font-size: 0.65rem;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+    details.solution-toggle[open] summary::before { transform: rotate(90deg); }
+
+    .solution-content {
+      background: rgba(11, 17, 32, 0.7);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 0.65rem;
+    }
+    .output-box {
+      background: #000;
+      border-left: 3px solid var(--accent-emerald);
+      padding: 0.6rem 0.85rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent-emerald);
+      margin: 0.5rem 0;
+    }
+    .explanation-step { margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary); }
+    .explanation-step strong { color: var(--text-primary); }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      #sidebar { width: 100%; height: auto; position: relative; }
+      #main-content { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="brand">
+      <h1>JS Interview Mastery</h1>
+      <p>75+ Practical & Tricky Questions</p>
+    </div>
+
+    <div class="nav-search">
+      <input type="text" id="searchInput" placeholder="Search questions & topics...">
+    </div>
+
+    <ul class="nav-list">
+      <li><a href="#topic-1" class="nav-link"><span>1. What is JavaScript?</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-2" class="nav-link"><span>2. Calls vs References</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-3" class="nav-link"><span>3. Objects & JSON Basics</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-4" class="nav-link"><span>4. Variable & Function Hoisting</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-5" class="nav-link"><span>5. Temporal Dead Zone (TDZ)</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-6" class="nav-link"><span>6. var & Function Expressions</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-7" class="nav-link"><span>7. Hoisting Output Questions</span> <span class="nav-badge">6 Qs</span></a></li>
+      <li><a href="#topic-8" class="nav-link"><span>8. map() vs. filter()</span> <span class="nav-badge">6 Qs</span></a></li>
+      <li><a href="#topic-9" class="nav-link"><span>9. Shallow vs Deep Copy</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-10" class="nav-link"><span>10. Comparing Objects</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-11" class="nav-link"><span>11. Object Key Use Cases</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-12" class="nav-link"><span>12. JSON (Parse & Stringify)</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-13" class="nav-link"><span>13. DOM & Browser Events</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-14" class="nav-link"><span>14. Event Bubbling & Delegation</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-15" class="nav-link"><span>15. stopPropagation vs preventDefault</span> <span class="nav-badge">5 Qs</span></a></li>
+      <li><a href="#topic-16" class="nav-link"><span>16. AJAX</span> <span class="nav-badge">4 Qs</span></a></li>
+      <li><a href="#topic-17" class="nav-link"><span>17. fetch() Return Value</span> <span class="nav-badge">5 Qs</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="header-banner">
+      <h2>Complete JavaScript Revisional Guide & Question Bank</h2>
+      <p>Covering all requested topics, tricky edge cases, output predictions, and practical browser scenarios. Pure client-side JavaScript without framework distractions.</p>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">All (76 Questions)</button>
+        <button class="filter-btn" data-filter="conceptual">Conceptual</button>
+        <button class="filter-btn" data-filter="output">Output & Execution</button>
+        <button class="filter-btn" data-filter="tricky">Tricky Edge Cases</button>
+      </div>
+      <div>
+        <button class="action-btn" id="toggleAllBtn">📂 Expand All Solutions</button>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TOPIC 1: WHAT IS JAVASCRIPT?
+         ========================================== -->
+    <section id="topic-1" class="topic-section">
+      <div class="topic-header">
+        <h3>1. What is JavaScript?</h3>
+        <span class="topic-tag">Core Fundamentals</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>High-level & Single-Threaded:</strong> Memory is managed automatically (garbage collection). JavaScript has a single Call Stack and runs on one main execution thread.</li>
+          <li><strong>Dynamically & Weakly Typed:</strong> Types are checked at runtime, and values are implicitly coerced during operations (e.g. <code>"5" - 2 === 3</code>).</li>
+          <li><strong>JIT-Compiled:</strong> Modern engines (V8 in Chrome/Edge, SpiderMonkey in Firefox) parse code into bytecode and compile hot code into optimized machine instructions on the fly.</li>
+          <li><strong>Event Loop:</strong> Offloads async tasks (timers, fetch, events) to multi-threaded browser Web APIs, scheduling their callbacks back onto the Call Stack when free.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q1.1: What is the difference between Dynamically Typed and Weakly Typed?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">JavaScript is both dynamically typed and weakly typed. What do these two distinct terms mean?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><strong>Dynamically Typed:</strong> Variable types are determined at <em>runtime</em>, not at compile-time. A variable can hold a number now and a string later: <code>let x = 10; x = "hello";</code>.</li>
+                  <li><strong>Weakly Typed (Loose Typing):</strong> JavaScript performs <em>implicit type coercion</em> when types do not match instead of throwing an error: <code>10 + "5" &rarr; "105"</code> (number coerced to string), and <code>"10" - 2 &rarr; 8</code> (string coerced to number).</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q1.2: How does JavaScript execute asynchronous code if the engine is strictly single-threaded?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Clarify how the single Call Stack coordinates with the Browser Web APIs, Callback Queue, and Event Loop.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                The JavaScript <em>engine</em> (Call Stack) executes one statement at a time. However, the <em>browser environment</em> provides multi-threaded background Web APIs:
+                <ol>
+                  <li>Asynchronous tasks (<code>setTimeout</code>, <code>fetch</code>, DOM clicks) are delegated to browser background threads.</li>
+                  <li>The main Call Stack continues executing synchronous code without pausing.</li>
+                  <li>When the background task finishes, its callback is placed in the Callback Queue.</li>
+                  <li>The <strong>Event Loop</strong> waits for the Call Stack to become completely empty, then pushes the callback onto the Call Stack.</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q1.3: Asynchronous Execution Order with setTimeout 0ms</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed to the console in what sequence?</div>
+          <pre><code>console.log("A");
+
+setTimeout(() => {
+  console.log("B");
+}, 0);
+
+console.log("C");</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">A
+C
+B</div>
+              <div class="explanation-step">
+                <code>console.log("A")</code> and <code>console.log("C")</code> are synchronous and run on the Call Stack immediately.
+                <code>setTimeout(..., 0)</code> registers its callback into the Callback Queue. The Event Loop only pulls <code>"B"</code> from the queue after the entire script stack has cleared.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q1.4: Call Stack Freezing via Long Synchronous Loop</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Edge Case</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Will the <code>setTimeout</code> callback execute after exactly 100ms? Why or why not?</div>
+          <pre><code>console.log("Start");
+
+setTimeout(() => {
+  console.log("Timer completed");
+}, 100);
+
+const start = Date.now();
+while (Date.now() - start < 300) {
+  // Heavy synchronous blocking task for 300ms
+}
+
+console.log("End");</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">Start
+End
+Timer completed</div>
+              <div class="explanation-step">
+                <strong>Explanation:</strong>
+                Even though the timer finishes in the background at 100ms, the main Call Stack is occupied by the synchronous <code>while</code> loop until 300ms.
+                The Event Loop <em>cannot</em> interrupt the running Call Stack. The callback must wait until the synchronous loop and <code>console.log("End")</code> finish before running (at roughly ~300ms).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q1.5: The Typeof Minefield (null, NaN, function, undeclared)</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Predict the string returned by each <code>typeof</code> check:</div>
+          <pre><code>console.log(typeof null);
+console.log(typeof NaN);
+console.log(typeof function() {});
+console.log(typeof undefinedVar);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">object
+number
+function
+undefined</div>
+              <div class="explanation-step">
+                <ul>
+                  <li><code>typeof null === "object"</code>: A historical bug in JavaScript's original implementation where object type tags were 0.</li>
+                  <li><code>typeof NaN === "number"</code>: NaN stands for "Not-a-Number", but its data type according to IEEE 754 floating-point standard is numeric!</li>
+                  <li><code>typeof function() {} === "function"</code>: Functions are callable objects.</li>
+                  <li><code>typeof undefinedVar === "undefined"</code>: For completely undeclared variables, <code>typeof</code> safely returns <code>"undefined"</code> without throwing.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 2: FUNCTION CALLS VS REFERENCES
+         ========================================== -->
+    <section id="topic-2" class="topic-section">
+      <div class="topic-header">
+        <h3>2. Function Calls vs. Function References</h3>
+        <span class="topic-tag">Functions</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Function Reference (<code>fn</code>):</strong> Refers to the function stored in memory. Does not execute the function. Used for callbacks and event handlers.</li>
+          <li><strong>Function Call (<code>fn()</code>):</strong> Adding parentheses immediately invokes the function and evaluates to its return value.</li>
+          <li><strong>Passing Arguments:</strong> Never write <code>addEventListener('click', fn(arg))</code> because it runs immediately. Use an arrow wrapper: <code>() => fn(arg)</code> or <code>fn.bind(null, arg)</code>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q2.1: Why does passing handleClick() to onclick execute immediately?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain why <code>button.onclick = handleClick()</code> does not wait for a user click.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                When JavaScript parses the line <code>button.onclick = handleClick()</code>, the parentheses <code>()</code> cause the function to execute right then and there during script evaluation.
+                Whatever <code>handleClick()</code> returns (usually <code>undefined</code>) is assigned to <code>onclick</code>. When the user clicks the button later, the browser tries to invoke <code>undefined()</code>, which does nothing.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q2.2: Passing Function Reference vs Passing Return Value</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>function getGreeting() {
+  return "Hello!";
+}
+
+function run(task) {
+  console.log("Type:", typeof task);
+  if (typeof task === "function") {
+    console.log("Result:", task());
+  } else {
+    console.log("Direct value:", task);
+  }
+}
+
+run(getGreeting);
+run(getGreeting());</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Type: function
+Result: Hello!
+Type: string
+Direct value: Hello!</div>
+              <div class="explanation-step">
+                In the first call, <code>getGreeting</code> is a reference to the function. Inside <code>run</code>, <code>task()</code> invokes it.
+                In the second call, <code>getGreeting()</code> runs first and evaluates to the string <code>"Hello!"</code>, which is received by <code>run</code> as a string.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q2.3: Lost "this" Context on Method Reference Extraction</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed when <code>fn()</code> is called?</div>
+          <pre><code>const user = {
+  name: "Sarah",
+  getName() {
+    return this.name;
+  }
+};
+
+const fn = user.getName;
+console.log(fn());</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">undefined</div>
+              <div class="explanation-step">
+                When <code>user.getName</code> is assigned to <code>fn</code>, only the function reference is copied, completely disconnecting it from the <code>user</code> object.
+                When <code>fn()</code> is invoked as a standalone function, its <code>this</code> defaults to the global <code>window</code> object (or <code>undefined</code> in strict mode). Since <code>window.name</code> is not set, it returns <code>undefined</code>.
+                <br><strong>Fix:</strong> <code>const fn = user.getName.bind(user);</code>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q2.4: Higher-Order Function Returning a Function Reference</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed by the following code?</div>
+          <pre><code>function multiplier(factor) {
+  return function(number) {
+    return number * factor;
+  };
+}
+
+const double = multiplier(2);
+console.log(typeof double);
+console.log(double(5));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">function
+10</div>
+              <div class="explanation-step">
+                <code>multiplier(2)</code> returns an inner function reference where <code>factor = 2</code> is captured by closure.
+                The returned reference is stored in <code>double</code>. Calling <code>double(5)</code> runs the inner function: <code>5 * 2 = 10</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q2.5: Passing Arguments into Callbacks: Arrow Function vs Function Reference</div>
+          <div class="badges"><span class="badge badge-conceptual">Best Practice</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Which of the following three event listener setups is correct to pass the user ID <code>42</code>, and why?</div>
+          <pre><code>// Option A:
+btn.addEventListener("click", deleteItem(42));
+
+// Option B:
+btn.addEventListener("click", function() { deleteItem(42); });
+
+// Option C:
+btn.addEventListener("click", () => deleteItem(42));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <strong>Options B and C are correct.</strong> Option A is a bug:
+                <ul>
+                  <li><strong>Option A:</strong> Invokes <code>deleteItem(42)</code> immediately on script run.</li>
+                  <li><strong>Option B & C:</strong> Pass an anonymous function reference that will only execute when the click event occurs. Option C is the modern, preferred ES6 concise syntax.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 3: OBJECTS AND JSON BASICS
+         ========================================== -->
+    <section id="topic-3" class="topic-section">
+      <div class="topic-header">
+        <h3>3. Objects and JSON Basics</h3>
+        <span class="topic-tag">Objects & JSON</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>JavaScript Object:</strong> An in-memory collection of key-value pairs. Can store methods, dates, undefined, and symbols.</li>
+          <li><strong>JSON:</strong> Plain text data format used for transmission. Keys must be double-quoted. Values can only be strings, numbers, booleans, null, arrays, and objects.</li>
+          <li><strong>Property Access:</strong> Dot notation (<code>obj.prop</code>) for fixed valid identifiers. Bracket notation (<code>obj[varKey]</code>) for dynamic variables or keys with special characters.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q3.1: What are the main differences between a JavaScript Object and JSON?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Summarize the 3 core differences between a live JS object and a JSON string.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ol>
+                  <li><strong>Data Type:</strong> A JS Object is a live reference data structure stored in memory; JSON is a serialized string format.</li>
+                  <li><strong>Allowed Types:</strong> JS Objects can hold functions, methods, <code>undefined</code>, and <code>Symbol</code>. JSON strictly forbids functions and <code>undefined</code>.</li>
+                  <li><strong>Key Formatting:</strong> JS Objects allow unquoted keys (e.g. <code>{ age: 25 }</code>); JSON <em>requires</em> double quotes around every key (e.g. <code>{ "age": 25 }</code>).</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q3.2: Dynamic Keys: Dot Notation vs Bracket Notation</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const field = "score";
+const player = {
+  score: 100,
+  field: 50
+};
+
+console.log(player.field);
+console.log(player[field]);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">50
+100</div>
+              <div class="explanation-step">
+                <code>player.field</code> accesses the literal property named <code>"field"</code> &rarr; <code>50</code>.
+                <code>player[field]</code> evaluates the variable <code>field</code> (which holds <code>"score"</code>) and reads <code>player["score"]</code> &rarr; <code>100</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q3.3: Mutating a const Object</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Which of these lines will throw an error and why?</div>
+          <pre><code>const car = { brand: "Toyota" };
+
+car.brand = "Honda"; // Line A
+car.year = 2024;     // Line B
+car = { brand: "BMW" }; // Line C</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <strong>Only Line C throws an error (TypeError: Assignment to constant variable).</strong>
+                <br>
+                <code>const</code> prevents the variable identifier <code>car</code> from being <strong>reassigned to a new memory address</strong>.
+                It does <em>not</em> make the object itself immutable. Properties inside the object can still be added, modified, or deleted (Lines A and B work fine).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q3.4: Checking Property Existence: in vs hasOwnProperty vs undefined</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will each check print for this object?</div>
+          <pre><code>const user = {
+  role: undefined
+};
+
+console.log(user.role !== undefined);
+console.log("role" in user);
+console.log(user.hasOwnProperty("role"));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">false
+true
+true</div>
+              <div class="explanation-step">
+                <code>user.role !== undefined</code> is <code>false</code> because the property exists, but its value is literally <code>undefined</code>!
+                Both <code>"role" in user</code> and <code>user.hasOwnProperty("role")</code> correctly detect that the property key exists on the object, regardless of its value.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q3.5: Keys with Special Characters and Hyphens</div>
+          <div class="badges"><span class="badge badge-conceptual">Syntax Rules</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does <code>user.first-name</code> cause an error, and how must you write it?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                In dot notation, JavaScript interprets the hyphen <code>-</code> as the subtraction arithmetic operator: <code>user.first - name</code>. It tries to subtract the variable <code>name</code> from <code>user.first</code>, resulting in <code>ReferenceError: name is not defined</code> or <code>NaN</code>.
+                <br><strong>Solution:</strong> Wrap the property name in quotes and use bracket notation:
+                <code>user["first-name"]</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 4: VARIABLE & FUNCTION HOISTING
+         ========================================== -->
+    <section id="topic-4" class="topic-section">
+      <div class="topic-header">
+        <h3>4. Variable and Function Hoisting</h3>
+        <span class="topic-tag">Hoisting & Scopes</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Creation Phase:</strong> Before execution, the engine allocates memory for declarations.</li>
+          <li><strong><code>var</code>:</strong> Hoisted and initialized with <code>undefined</code>.</li>
+          <li><strong>Function Declarations:</strong> Fully hoisted along with their complete function bodies.</li>
+          <li><strong>Precedence:</strong> Function declarations hoist before variable declarations.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q4.1: Why can we call a function before its declaration line?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain what the engine does during the compilation phase for a Function Declaration.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                During the Creation Phase of the Execution Context, the engine scans the code and stores all <strong>Function Declarations</strong> in memory with their complete implementation.
+                By the time the Execution Phase begins at line 1, the function already exists and is fully callable anywhere within its scope.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q4.2: Function Declaration Overriding Var Declaration</div>
+          <div class="badges"><span class="badge badge-output">Output / High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Predict the console output:</div>
+          <pre><code>console.log(typeof greet);
+
+var greet = "Welcome";
+
+function greet() {
+  return "Hello!";
+}
+
+console.log(typeof greet);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">function
+string</div>
+              <div class="explanation-step">
+                1. In the creation phase, <code>function greet()</code> hoists first. The declaration <code>var greet;</code> is ignored because <code>greet</code> already exists in scope.
+                <br>2. Line 1: <code>typeof greet</code> is <code>"function"</code>.
+                <br>3. Line 3: <code>greet = "Welcome"</code> runs during execution, reassigning <code>greet</code> to a string.
+                <br>4. Line 9: <code>typeof greet</code> is now <code>"string"</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q4.3: Unassigned Var Following a Function Declaration</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged?</div>
+          <pre><code>function score() {
+  return 100;
+}
+var score;
+
+console.log(typeof score);
+console.log(score);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">function
+[Function: score]</div>
+              <div class="explanation-step">
+                <code>var score;</code> is only an unassigned declaration without an assignment expression.
+                Because the identifier <code>score</code> was already bound to the function during the creation phase, the empty declaration <code>var score;</code> does not overwrite or reset it to <code>undefined</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q4.4: Nested Hoisting in Functions</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged by calling <code>test()</code>?</div>
+          <pre><code>var a = 1;
+
+function test() {
+  console.log("a is:", a);
+  var a = 2;
+  console.log("a is now:", a);
+}
+
+test();
+console.log("Global a:", a);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">a is: undefined
+a is now: 2
+Global a: 1</div>
+              <div class="explanation-step">
+                Inside <code>test()</code>, <code>var a</code> is hoisted locally to the top of <code>test</code> as <code>undefined</code>, shadowing the outer global <code>a = 1</code>.
+                The first log inside <code>test</code> sees local <code>a</code> before assignment &rarr; <code>undefined</code>.
+                The global <code>a</code> remains <code>1</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q4.5: Multiple var Declarations Interleaved</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What is the output?</div>
+          <pre><code>var x = 10;
+var x = 20;
+var x;
+
+console.log(x);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">20</div>
+              <div class="explanation-step">
+                JavaScript allows re-declaring variables with <code>var</code> without error.
+                The third line <code>var x;</code> has no assignment, so it does nothing. <code>x</code> retains its last assigned value: <code>20</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 5: TEMPORAL DEAD ZONE (TDZ)
+         ========================================== -->
+    <section id="topic-5" class="topic-section">
+      <div class="topic-header">
+        <h3>5. Temporal Dead Zone (TDZ)</h3>
+        <span class="topic-tag">ES6 Scoping</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Definition:</strong> The zone from the start of a block scope until the line where <code>let</code> or <code>const</code> is initialized.</li>
+          <li><strong>Are <code>let</code>/<code>const</code> hoisted?</strong> YES. They are hoisted to the top of their block, but remain in an <strong>uninitialized</strong> state.</li>
+          <li><strong>Accessing TDZ:</strong> Reading or writing to an uninitialized variable throws a <code>ReferenceError: Cannot access 'x' before initialization</code>.</li>
+          <li><strong><code>typeof</code> is NOT safe in TDZ:</strong> Calling <code>typeof</code> on a variable in TDZ also throws a ReferenceError!</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q5.1: Why is it called "Temporal" Dead Zone?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does the specification use the word "Temporal" (time-based) instead of "Spatial" (line-based)?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                Because TDZ is determined by <strong>order of execution in time</strong>, not physical placement in code lines:
+                <pre><code>function test() {
+  const read = () => console.log(x); // Declared above let x physically!
+
+  // Calling read() here would throw ReferenceError!
+  let x = 42; 
+  read(); // Works! Called after x has initialized in time.
+}
+test(); // Output: 42</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q5.2: Shadowing & TDZ in Block Scope</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens when this function is called?</div>
+          <pre><code>let value = "global";
+
+function show() {
+  console.log(value);
+  let value = "local";
+}
+
+show();</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">ReferenceError: Cannot access 'value' before initialization</div>
+              <div class="explanation-step">
+                The declaration <code>let value = "local"</code> inside <code>show()</code> is hoisted to the top of <code>show()</code>.
+                This places <code>value</code> in the TDZ for that local scope.
+                When <code>console.log(value)</code> runs, the engine sees the uninitialized local binding and throws a <code>ReferenceError</code> immediately without checking outer scopes.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q5.3: Default Function Parameter Evaluation Order TDZ</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens when calling <code>fnA()</code> vs <code>fnB()</code>?</div>
+          <pre><code>function fnA(a = 1, b = a) {
+  return a + b;
+}
+
+function fnB(a = b, b = 2) {
+  return a + b;
+}
+
+console.log(fnA());
+console.log(fnB());</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">2
+ReferenceError: Cannot access 'b' before initialization</div>
+              <div class="explanation-step">
+                Function parameters evaluate left-to-right in their own parameter scope:
+                <ul>
+                  <li>In <code>fnA</code>: <code>a</code> initializes to 1. Then <code>b</code> evaluates <code>a</code> (already initialized) &rarr; 1 + 1 = 2.</li>
+                  <li>In <code>fnB</code>: <code>a</code> tries to evaluate <code>b</code>, but <code>b</code> is declared second and is still in its TDZ &rarr; throws <strong>ReferenceError</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q5.4: typeof on TDZ vs Undeclared Variable</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Edge Case</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Compare what happens in both console logs:</div>
+          <pre><code>console.log(typeof notDeclared);
+
+{
+  console.log(typeof myLet);
+  let myLet = 10;
+}</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">undefined
+ReferenceError: Cannot access 'myLet' before initialization</div>
+              <div class="explanation-step">
+                While <code>typeof</code> on a totally missing variable safely returns <code>"undefined"</code>, inside a TDZ <code>typeof</code> throws a <strong>ReferenceError</strong>!
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q5.5: let in a Switch Statement TDZ Collision</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What error occurs in this switch block?</div>
+          <pre><code>const action = "create";
+
+switch (action) {
+  case "create":
+    let message = "Item created";
+    console.log(message);
+    break;
+  case "delete":
+    let message = "Item deleted"; // Error here!
+    console.log(message);
+    break;
+}</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer & Fix</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <strong>SyntaxError: Identifier 'message' has already been declared.</strong>
+                <br>
+                The entire <code>switch</code> body shares a <strong>single block scope</strong>! Both cases declare <code>let message</code> in the same block.
+                <br><strong>Fix:</strong> Wrap each case in its own block braces:
+                <pre><code>case "create": {
+  let message = "Item created";
+  break;
+}
+case "delete": {
+  let message = "Item deleted";
+  break;
+}</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 6: VAR VS FUNCTION EXPRESSIONS
+         ========================================== -->
+    <section id="topic-6" class="topic-section">
+      <div class="topic-header">
+        <h3>6. var and Function Expressions</h3>
+        <span class="topic-tag">Expressions vs Declarations</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Function Declaration:</strong> <code>function foo() {}</code> — hoisted with its full body.</li>
+          <li><strong>Function Expression:</strong> <code>var foo = function() {}</code> — the variable <code>foo</code> hoists as <code>undefined</code>.</li>
+          <li><strong>Named Function Expression (NFE):</strong> <code>var foo = function bar() {}</code> — the name <code>bar</code> is scoped <strong>exclusively inside</strong> its own body (useful for recursion).</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q6.1: Why does invoking a var function expression early cause TypeError?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does <code>foo()</code> throw <code>TypeError: foo is not a function</code> instead of <code>ReferenceError</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                Because <code>var foo</code> is hoisted and initialized to <code>undefined</code>.
+                The identifier <code>foo</code> exists in scope, so there is no ReferenceError. However, attempting <code>foo()</code> tries to execute <code>undefined()</code>. Since <code>undefined</code> is not a callable function, the engine throws a <strong>TypeError</strong>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q6.2: Calling Function Declaration vs Expression Before Definition</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be the output?</div>
+          <pre><code>runA();
+runB();
+
+function runA() {
+  console.log("Run A executed");
+}
+
+var runB = function() {
+  console.log("Run B executed");
+};</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Run A executed
+TypeError: runB is not a function</div>
+              <div class="explanation-step">
+                <code>runA</code> is fully hoisted and runs successfully.
+                <code>runB</code> is hoisted as <code>undefined</code>. Calling <code>runB()</code> throws a TypeError and stops the script.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q6.3: Named Function Expression Internal Scope</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>var calculate = function factorial(n) {
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+};
+
+console.log(calculate(3));
+console.log(typeof factorial);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">6
+undefined</div>
+              <div class="explanation-step">
+                In a Named Function Expression, the function's internal name (<code>factorial</code>) is bound <strong>only inside the function's own body</strong>.
+                Outside the function, <code>factorial</code> is not accessible in outer scope &rarr; <code>typeof factorial === "undefined"</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q6.4: Function Expression Assigned to let vs var</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What error is thrown when calling <code>start()</code> early?</div>
+          <pre><code>start();
+
+let start = function() {
+  console.log("Started");
+};</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">ReferenceError: Cannot access 'start' before initialization</div>
+              <div class="explanation-step">
+                Because <code>start</code> is declared with <code>let</code>, it is in the Temporal Dead Zone before line 3. Calling it early throws <strong>ReferenceError</strong> (unlike <code>var</code>, which throws TypeError).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q6.5: When should you prefer a Function Expression over a Declaration?</div>
+          <div class="badges"><span class="badge badge-conceptual">Best Practice</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">List 2 practical situations where function expressions are preferred.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ol>
+                  <li><strong>Conditional Assignments:</strong> Assigning different functions based on runtime conditions (e.g. <code>const handler = isMobile ? mobileFn : desktopFn;</code>).</li>
+                  <li><strong>Inline Callbacks:</strong> Passing anonymous or arrow functions directly into array methods: <code>numbers.map(x => x * 2)</code>.</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 7: HOISTING-BASED OUTPUT QUESTIONS (TRICKY)
+         ========================================== -->
+    <section id="topic-7" class="topic-section">
+      <div class="topic-header">
+        <h3>7. Hoisting-Based Output Questions</h3>
+        <span class="topic-tag">Tricky Edge Cases</span>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.1: The setTimeout in Loop Trap: var vs let</div>
+          <div class="badges"><span class="badge badge-tricky">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain the exact difference in output between Loop A and Loop B:</div>
+          <pre><code>// Loop A:
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log("var i:", i), 50);
+}
+
+// Loop B:
+for (let j = 0; j < 3; j++) {
+  setTimeout(() => console.log("let j:", j), 50);
+}</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Explanation</summary>
+            <div class="solution-content">
+              <div class="output-box">var i: 3
+var i: 3
+var i: 3
+let j: 0
+let j: 1
+let j: 2</div>
+              <div class="explanation-step">
+                <ul>
+                  <li><code>var i</code> is function/global scoped. There is only <strong>one variable <code>i</code> in memory</strong>. By the time the 50ms timers execute from the Callback Queue, the synchronous loop has finished and <code>i</code> is 3. All 3 callbacks log 3.</li>
+                  <li><code>let j</code> is block scoped. For <strong>each iteration</strong> of the loop, a fresh binding of <code>j</code> is created. Each callback captures its iteration's value (0, 1, 2).</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.2: Chained Assignment Implicit Global Leakage</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged by the following code?</div>
+          <pre><code>(function() {
+  var a = b = 50;
+})();
+
+console.log(typeof a);
+console.log(typeof b);
+console.log(b);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">undefined
+number
+50</div>
+              <div class="explanation-step">
+                <code>var a = b = 50;</code> is evaluated right-to-left:
+                <br>1. <code>b = 50</code>: Without <code>var</code>, <code>let</code>, or <code>const</code>, <code>b</code> leaks into the global object (<code>window.b = 50</code>).
+                <br>2. <code>var a = b</code>: Declares <code>a</code> locally inside the function.
+                <br>3. Outside the function, <code>a</code> is not accessible (&rarr; <code>undefined</code>), but <code>b</code> is accessible globally (&rarr; <code>50</code>).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.3: Function Parameter vs Local Variable Hoisting</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged?</div>
+          <pre><code>function test(x) {
+  console.log("1:", x);
+  var x = 20;
+  console.log("2:", x);
+}
+
+test(10);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">1: 10
+2: 20</div>
+              <div class="explanation-step">
+                Function parameters are initialized at the start of the function execution with their argument values (<code>x = 10</code>).
+                The local declaration <code>var x;</code> inside the function does not overwrite the already-assigned parameter <code>x</code>.
+                So line 1 prints <code>10</code>. Then <code>x = 20</code> assigns the new value, so line 2 prints <code>20</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.4: Function Declaration Inside Dead if Branch</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>var flag = 1;
+
+function process() {
+  flag = 10;
+  return;
+  function flag() {}
+}
+
+process();
+console.log(flag);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">1</div>
+              <div class="explanation-step">
+                <code>function flag() {}</code> is hoisted to the top of <code>process()</code>, creating a <strong>local variable <code>flag</code></strong> inside <code>process</code>.
+                When <code>flag = 10</code> executes, it modifies the <em>local</em> <code>flag</code>.
+                The global variable <code>flag</code> remains untouched at <code>1</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.5: Fixing the var Loop with IIFE (Closure)</div>
+          <div class="badges"><span class="badge badge-tricky">Solution Technique</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">How did developers solve the <code>var</code> loop closure problem before ES6 <code>let</code> existed?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Code Solution</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                By wrapping the inside of the loop in an <strong>Immediately Invoked Function Expression (IIFE)</strong> to lock each iteration's value in a new function scope:
+                <pre><code>for (var i = 0; i < 3; i++) {
+  (function(index) {
+    setTimeout(() => console.log("iife:", index), 50);
+  })(i);
+}
+// Output: 0, 1, 2</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q7.6: Illegal Shadowing in the Same Block</div>
+          <div class="badges"><span class="badge badge-tricky">Compilation Error</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens when this snippet runs?</div>
+          <pre><code>let score = 50;
+{
+  var score = 100;
+}</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">SyntaxError: Identifier 'score' has already been declared</div>
+              <div class="explanation-step">
+                <code>var</code> ignores block boundaries and attempts to hoist to the outer scope. However, the outer scope already has <code>let score</code> declared in the same scope namespace. The engine detects this during compilation and throws a <strong>SyntaxError</strong> before running any code.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 8: MAP() VS FILTER()
+         ========================================== -->
+    <section id="topic-8" class="topic-section">
+      <div class="topic-header">
+        <h3>8. map() vs. filter()</h3>
+        <span class="topic-tag">Array Methods</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong><code>map()</code>:</strong> Transforms each item. Returns a new array with the <strong>exact same length</strong> as the input array.</li>
+          <li><strong><code>filter()</code>:</strong> Tests each item. Returns a new array containing <strong>only items that return truthy</strong> (length &le; original).</li>
+          <li><strong>Immutability:</strong> Neither method mutates the original array. Both return a new array.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q8.1: Can map() ever return an array with fewer items than the original?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens if a developer does not return anything inside a <code>map()</code> callback?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <strong>NO. <code>map()</code> always returns an array of the exact same length.</strong>
+                If the callback returns nothing (or returns <code>undefined</code>/<code>null</code>), the element at that index becomes <code>undefined</code>. It is never excluded.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q8.2: Misusing map() to Filter Items</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const nums = [1, 2, 3, 4, 5];
+
+const result = nums.map(n => {
+  if (n > 3) return n;
+});
+
+console.log(result);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">[ undefined, undefined, undefined, 4, 5 ]</div>
+              <div class="explanation-step">
+                For numbers 1, 2, and 3, the <code>if</code> condition is false and nothing is returned. JavaScript functions return <code>undefined</code> by default when no return statement executes.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q8.3: The Classic ['1', '7', '11'].map(parseInt) Trap</div>
+          <div class="badges"><span class="badge badge-tricky">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does <code>['1', '7', '11'].map(parseInt)</code> produce unexpected output?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">[ 1, NaN, 3 ]</div>
+              <div class="explanation-step">
+                <code>map</code> passes 3 arguments to its callback: <code>(element, index, array)</code>.
+                <code>parseInt</code> accepts 2 arguments: <code>(string, radix)</code>.
+                <ol>
+                  <li><code>parseInt('1', 0)</code>: Radix 0 defaults to decimal base 10 &rarr; <code>1</code>.</li>
+                  <li><code>parseInt('7', 1)</code>: Radix 1 is mathematically invalid &rarr; <code>NaN</code>.</li>
+                  <li><code>parseInt('11', 2)</code>: Radix 2 (binary) parses '11' as 1 &times; 2<sup>1</sup> + 1 &times; 2<sup>0</sup> &rarr; <code>3</code>.</li>
+                </ol>
+                <strong>The Fix:</strong> <code>['1', '7', '11'].map(Number)</code> or <code>['1', '7', '11'].map(n => parseInt(n, 10))</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q8.4: Filtering Falsy Values</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged by passing <code>Boolean</code> to <code>filter</code>?</div>
+          <pre><code>const mixed = [0, "hello", "", false, 42, null, undefined];
+const clean = mixed.filter(Boolean);
+
+console.log(clean);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">[ 'hello', 42 ]</div>
+              <div class="explanation-step">
+                <code>filter(Boolean)</code> passes each item into the <code>Boolean()</code> constructor. Falsy values (`0`, `""`, `false`, `null`, `undefined`, `NaN`) are dropped, leaving only truthy values.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q8.5: Mutating Object References Inside map()</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Did <code>map()</code> preserve immutability here?</div>
+          <pre><code>const list = [{ task: "Study", done: false }];
+
+const updated = list.map(item => {
+  item.done = true;
+  return item;
+});
+
+console.log(list[0].done);
+console.log(list === updated);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">true
+false</div>
+              <div class="explanation-step">
+                While <code>updated</code> is a new array (<code>list !== updated</code>), modifying <code>item.done = true</code> directly mutates the shared underlying object reference in memory!
+                <br><strong>Pure Pattern:</strong> <code>list.map(item => ({ ...item, done: true }))</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q8.6: Sparse Array Holes in map vs filter</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be the lengths of both arrays?</div>
+          <pre><code>const sparse = [1, , 3]; // Index 1 is empty
+
+const m = sparse.map(x => x * 2);
+const f = sparse.filter(x => true);
+
+console.log(m.length, m);
+console.log(f.length, f);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">3 [ 2, <1 empty item>, 6 ]
+2 [ 1, 3 ]</div>
+              <div class="explanation-step">
+                <code>map()</code> preserves empty slots (holes) in the returned array, keeping length 3.
+                <code>filter()</code> skips empty unassigned slots and removes them, reducing length to 2.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 9: SHALLOW COPY VS DEEP COPY
+         ========================================== -->
+    <section id="topic-9" class="topic-section">
+      <div class="topic-header">
+        <h3>9. Shallow Copy vs. Deep Copy</h3>
+        <span class="topic-tag">Memory & Objects</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Primitives:</strong> Copied by value (numbers, strings, booleans).</li>
+          <li><strong>Objects & Arrays:</strong> Copied by reference (pointer in memory).</li>
+          <li><strong>Shallow Copy:</strong> Clones only the top level. Nested objects are still shared: <code>{ ...obj }</code>, <code>Object.assign({}, obj)</code>, <code>arr.slice()</code>.</li>
+          <li><strong>Deep Copy:</strong> Duplicates every level into new memory: <code>structuredClone(obj)</code> (modern standard) or <code>JSON.parse(JSON.stringify(obj))</code>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q9.1: What is the main danger of using a shallow copy?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain what happens when modifying nested properties of an object cloned via the spread operator.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                The spread operator <code>{ ...obj }</code> only duplicates the top-level keys.
+                If <code>obj</code> contains nested objects (like <code>user.address.city</code>), both the copy and the original hold a reference pointing to the <strong>exact same nested address object in memory</strong>. Changing <code>copy.address.city</code> will unintentionally alter the original object.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q9.2: Shallow Copy Mutation Output Trace</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const original = {
+  title: "Guide",
+  author: { name: "Alex" }
+};
+
+const copy = { ...original };
+copy.title = "New Guide";
+copy.author.name = "Bob";
+
+console.log(original.title);
+console.log(original.author.name);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Guide
+Bob</div>
+              <div class="explanation-step">
+                <code>copy.title</code> is a primitive string at the top level &rarr; changing it does not affect <code>original.title</code>.
+                <code>copy.author</code> is a shared object reference &rarr; changing <code>copy.author.name</code> directly modifies <code>original.author.name</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q9.3: Cloning an Array of Objects with Spread</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged?</div>
+          <pre><code>const teamA = [{ name: "Dan" }];
+const teamB = [...teamA];
+
+teamB[0].name = "Eric";
+teamB.push({ name: "Frank" });
+
+console.log(teamA[0].name);
+console.log(teamA.length);
+console.log(teamB.length);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Eric
+1
+2</div>
+              <div class="explanation-step">
+                <code>[...teamA]</code> creates a new outer array, so pushing to <code>teamB</code> does not change <code>teamA.length</code>.
+                However, index 0 of both arrays references the identical player object. Mutating <code>teamB[0].name</code> affects <code>teamA[0].name</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q9.4: What are the practical limitations of structuredClone()?</div>
+          <div class="badges"><span class="badge badge-conceptual">Modern API</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What types cannot be cloned with <code>structuredClone()</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <code>structuredClone()</code> is built into modern browsers and handles Dates, RegExps, Maps, Sets, and circular references.
+                <br><strong>Limitations:</strong> It throws a <code>DOMException</code> if you try to clone <strong>functions (methods)</strong> or <strong>DOM elements</strong>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q9.5: structuredClone() Safe Deep Copy</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const config = {
+  theme: "dark",
+  settings: { volume: 80 }
+};
+
+const safeCopy = structuredClone(config);
+safeCopy.settings.volume = 20;
+
+console.log(config.settings.volume);
+console.log(safeCopy.settings.volume);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">80
+20</div>
+              <div class="explanation-step">
+                Because <code>structuredClone</code> created an independent deep copy of all nested levels, modifying <code>safeCopy.settings.volume</code> has zero impact on the original <code>config</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 10: COMPARING OBJECTS
+         ========================================== -->
+    <section id="topic-10" class="topic-section">
+      <div class="topic-header">
+        <h3>10. Comparing Objects</h3>
+        <span class="topic-tag">Equality & Memory</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Reference Equality:</strong> Objects and arrays are compared by their memory pointer, never by their properties.</li>
+          <li><code>{} === {}</code> is always <code>false</code>.</li>
+          <li><code>a === b</code> is only <code>true</code> if both point to the exact same object reference in memory.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q10.1: Why does {} === {} evaluate to false?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain what the engine does when comparing two empty object literals.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                Every time the JavaScript engine encounters an object literal <code>{}</code>, it allocates a <strong>brand-new, unique memory space</strong> in the Heap.
+                The strict equality operator <code>===</code> checks whether both operands point to the exact same memory address. Since they reside at different memory locations, the comparison evaluates to <code>false</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q10.2: Array and Object Reference Equality</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Predict the boolean result of each line:</div>
+          <pre><code>const a = [1, 2];
+const b = [1, 2];
+const c = a;
+
+console.log(a === b);
+console.log(a === c);
+console.log({} == {});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">false
+true
+false</div>
+              <div class="explanation-step">
+                <code>a === b</code>: Separate array instances &rarr; <code>false</code>.
+                <code>a === c</code>: Both variables point to the same memory location &rarr; <code>true</code>.
+                <code>{} == {}</code>: Even with loose equality <code>==</code>, distinct object references are never equal &rarr; <code>false</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q10.3: Object Reassignment and Reference Equality</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged?</div>
+          <pre><code>let user1 = { name: "Tom" };
+let user2 = user1;
+
+user1 = { name: "Jerry" };
+
+console.log(user2.name);
+console.log(user1 === user2);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Tom
+false</div>
+              <div class="explanation-step">
+                Initially, <code>user2</code> points to the <code>{ name: "Tom" }</code> object.
+                Then, <code>user1 = { name: "Jerry" }</code> reassigns <code>user1</code> to point to a <em>brand-new</em> object.
+                <code>user2</code> continues pointing to the original object (<code>"Tom"</code>). They are no longer the same reference &rarr; <code>false</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q10.4: The Coercion Equality Traps: [] == ![] and [] == 0</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Edge Case</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What are the outputs of these two loose equality checks?</div>
+          <pre><code>console.log([] == ![]);
+console.log([] == 0);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">true
+true</div>
+              <div class="explanation-step">
+                1. <code>[] == ![]</code>:
+                An empty array is truthy, so <code>![]</code> evaluates to boolean <code>false</code>.
+                The comparison becomes <code>[] == false</code>.
+                <code>false</code> is converted to number <code>0</code>.
+                <code>[]</code> is converted to string <code>""</code>, which is then converted to number <code>0</code>.
+                <code>0 == 0</code> is <strong>true</strong>!
+                <br>2. <code>[] == 0</code>:
+                <code>[].toString()</code> is <code>""</code>. <code>Number("")</code> is <code>0</code>. <code>0 == 0</code> is <strong>true</strong>!
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q10.5: How to Compare Two Objects by Value (Shallow Equal)</div>
+          <div class="badges"><span class="badge badge-conceptual">Implementation</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Write a clean helper function to test if two flat objects have identical properties:</div>
+          <details class="solution-toggle">
+            <summary>Reveal Code</summary>
+            <div class="solution-content">
+              <pre><code>function areObjectsEqual(obj1, obj2) {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  for (let key of keys1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(areObjectsEqual({ a: 1, b: 2 }, { a: 1, b: 2 })); // true
+console.log(areObjectsEqual({ a: 1 }, { a: 2 })); // false</code></pre>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 11: OBJECT KEY USE CASES
+         ========================================== -->
+    <section id="topic-11" class="topic-section">
+      <div class="topic-header">
+        <h3>11. Object Key Use Cases</h3>
+        <span class="topic-tag">Key Types & Access</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Keys are Strings:</strong> In plain objects, keys are always implicitly converted to <strong>Strings</strong> (or Symbols).</li>
+          <li><strong>Objects as Keys:</strong> Calling <code>obj[someObject]</code> invokes <code>.toString()</code>, turning the key into <code>"[object Object]"</code>. Multiple objects will overwrite each other!</li>
+          <li><strong>Numbers as Keys:</strong> <code>obj[10]</code> is identical to <code>obj["10"]</code>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q11.1: Objects as Keys Overwriting Trap</div>
+          <div class="badges"><span class="badge badge-tricky">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const a = { id: 1 };
+const b = { id: 2 };
+const map = {};
+
+map[a] = "Alpha";
+map[b] = "Beta";
+
+console.log(map[a]);
+console.log(Object.keys(map));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">Beta
+[ '[object Object]' ]</div>
+              <div class="explanation-step">
+                Plain objects can only have string or symbol keys. Both <code>a</code> and <code>b</code> are converted to strings via <code>.toString()</code>, resulting in the identical string <code>"[object Object]"</code>.
+                <code>map[b] = "Beta"</code> overwrites <code>map[a] = "Alpha"</code>!
+                <br><strong>Solution:</strong> Use ES6 <code>new Map()</code> if you need actual object references as keys.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q11.2: Number vs String Keys</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed?</div>
+          <pre><code>const data = {};
+data[1] = "One Number";
+data["1"] = "One String";
+
+console.log(data[1]);
+console.log(Object.keys(data).length);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">One String
+1</div>
+              <div class="explanation-step">
+                The numeric key <code>1</code> is automatically coerced to the string key <code>"1"</code>. The second assignment overwrites the first. There is only one key in the object.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q11.3: delete operator vs setting property to undefined</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What is the difference between <code>delete user.age</code> and <code>user.age = undefined</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><code>user.age = undefined</code>: The key <code>"age"</code> <strong>still exists</strong> on the object. <code>"age" in user</code> is <code>true</code>, and it will appear in <code>Object.keys(user)</code> and loops.</li>
+                  <li><code>delete user.age</code>: Completely <strong>removes the key</strong> from the object. <code>"age" in user</code> becomes <code>false</code>.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q11.4: delete Operator Output Check</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged?</div>
+          <pre><code>const car = { make: "Ford", model: "Mustang" };
+
+delete car.model;
+
+console.log("model" in car);
+console.log(car.model);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">false
+undefined</div>
+              <div class="explanation-step">
+                <code>delete</code> completely removed the <code>model</code> key from <code>car</code>. The <code>in</code> operator returns <code>false</code>. Accessing it returns <code>undefined</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q11.5: Plain Object vs ES6 Map: When to use Map?</div>
+          <div class="badges"><span class="badge badge-conceptual">Best Practice</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">List 2 clear scenarios where <code>new Map()</code> is superior to a plain object.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ol>
+                  <li><strong>Non-string keys:</strong> When you need objects, DOM elements, or functions to serve as keys without string conversion.</li>
+                  <li><strong>Frequent addition & deletion:</strong> <code>Map</code> is optimized for frequent key-value additions and removals and provides a direct <code>.size</code> property (unlike objects where you must call <code>Object.keys(obj).length</code>).</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 12: JSON DEEP DIVE (INTERMEDIATE)
+         ========================================== -->
+    <section id="topic-12" class="topic-section">
+      <div class="topic-header">
+        <h3>12. JSON (Parse, Stringify & Practical Gotchas)</h3>
+        <span class="topic-tag">JSON</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong><code>JSON.stringify(data)</code>:</strong> Converts a JS object/array into a JSON string.</li>
+          <li><strong><code>JSON.parse(str)</code>:</strong> Parses a valid JSON string back into a JS object/array. Throws a <code>SyntaxError</code> if malformed.</li>
+          <li><strong>What gets omitted:</strong> Object keys with <code>undefined</code> or functions are silently dropped.</li>
+          <li><strong>Inside Arrays:</strong> <code>undefined</code> and functions are converted to <code>null</code>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q12.1: What data types are lost when serializing to JSON?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens to functions, <code>undefined</code>, and <code>Date</code> objects during <code>JSON.stringify()</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><strong>Functions and <code>undefined</code>:</strong> Omitted when they are object properties; converted to <code>null</code> inside arrays.</li>
+                  <li><strong><code>Date</code> objects:</strong> Converted to ISO date strings (e.g. <code>"2026-10-29T12:00:00.000Z"</code>). When parsed back with <code>JSON.parse()</code>, they remain plain strings, NOT Date objects.</li>
+                  <li><strong><code>NaN</code> and <code>Infinity</code>:</strong> Converted to <code>null</code>.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q12.2: JSON.stringify() with Functions, Undefined and Arrays</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be the output string?</div>
+          <pre><code>const account = {
+  id: 101,
+  balance: undefined,
+  calcInterest: function() { return 5; },
+  transactions: [100, undefined, 250]
+};
+
+console.log(JSON.stringify(account));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">{"id":101,"transactions":[100,null,250]}</div>
+              <div class="explanation-step">
+                <code>balance</code> and <code>calcInterest</code> are completely stripped from the object.
+                Inside <code>transactions</code>, <code>undefined</code> is turned into <code>null</code> to keep the 2nd index occupied.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q12.3: Circular Reference Error in JSON.stringify()</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Exception</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens when an object references itself?</div>
+          <pre><code>const node = { id: 1 };
+node.self = node;
+
+JSON.stringify(node);</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">TypeError: Converting circular structure to JSON</div>
+              <div class="explanation-step">
+                JSON format cannot represent circular or cyclic data structures. The serializer detects the loop and throws a <strong>TypeError</strong> to prevent infinite recursion.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q12.4: How should you safely parse JSON from untrusted or network sources?</div>
+          <div class="badges"><span class="badge badge-conceptual">Best Practice</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does <code>JSON.parse()</code> crash applications if not wrapped in <code>try...catch</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                If the input string is invalid JSON (e.g. trailing comma, single quotes, or empty response), <code>JSON.parse()</code> throws an unhandled <code>SyntaxError</code> that crashes your script.
+                <br><strong>Safe Pattern:</strong>
+                <pre><code>function safeJSONParse(str, fallback = {}) {
+  try {
+    return JSON.parse(str);
+  } catch (error) {
+    console.error("Malformed JSON:", error.message);
+    return fallback;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q12.5: Pretty-Printing JSON with Formatting Arguments</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What do the 2nd and 3rd arguments of <code>JSON.stringify</code> do?</div>
+          <pre><code>const data = { a: 1, b: 2 };
+console.log(JSON.stringify(data, null, 2));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><strong>2nd argument (replacer):</strong> Can be an array of keys to whitelist or a filter function. Passing <code>null</code> includes all properties.</li>
+                  <li><strong>3rd argument (space):</strong> Number of spaces for indentation (e.g. <code>2</code>). It pretty-prints the JSON with line breaks and indentations for easy readability.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 13: DOM AND BROWSER EVENTS
+         ========================================== -->
+    <section id="topic-13" class="topic-section">
+      <div class="topic-header">
+        <h3>13. DOM and Browser Events</h3>
+        <span class="topic-tag">DOM Manipulation</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>DOM (Document Object Model):</strong> Tree of HTML elements representing the page structure.</li>
+          <li><strong>Adding Listeners:</strong> <code>element.addEventListener(type, handler)</code>. Allows attaching multiple listeners to the same event.</li>
+          <li><strong><code>event.target</code>:</strong> The exact innermost element that was clicked.</li>
+          <li><strong><code>event.currentTarget</code>:</strong> The element to which the event listener was attached.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q13.1: event.target vs event.currentTarget</div>
+          <div class="badges"><span class="badge badge-conceptual">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What is the critical difference between <code>target</code> and <code>currentTarget</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><strong><code>event.target</code>:</strong> The element that <em>triggered</em> the event (the origin, e.g. the innermost icon or span clicked).</li>
+                  <li><strong><code>event.currentTarget</code>:</strong> The element that is currently <em>handling</em> the event (the element where <code>addEventListener</code> was registered). Inside non-arrow functions, <code>event.currentTarget === this</code>.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q13.2: Target vs CurrentTarget on Nested Elements</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Given HTML: <code>&lt;button id="btn"&gt;&lt;i&gt;Icon&lt;/i&gt; Click&lt;/button&gt;</code><br>What is logged if the user clicks the <code>&lt;i&gt;Icon&lt;/i&gt;</code>?</div>
+          <pre><code>document.getElementById("btn").addEventListener("click", function(e) {
+  console.log("target:", e.target.tagName);
+  console.log("currentTarget:", e.currentTarget.tagName);
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">target: I
+currentTarget: BUTTON</div>
+              <div class="explanation-step">
+                The click directly hit the <code>&lt;i&gt;</code> element (&rarr; <code>target: I</code>).
+                The listener was registered on the <code>&lt;button&gt;</code> (&rarr; <code>currentTarget: BUTTON</code>).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q13.3: Why removeEventListener Fails with Anonymous Functions</div>
+          <div class="badges"><span class="badge badge-tricky">Common Trap</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does this code fail to remove the event listener?</div>
+          <pre><code>btn.addEventListener("click", () => console.log("Clicked!"));
+btn.removeEventListener("click", () => console.log("Clicked!"));</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer & Fix</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <code>() => ...</code> creates a <strong>brand-new function reference</strong> in memory each time it is written!
+                <code>removeEventListener</code> requires the <em>exact same function reference</em> that was passed to <code>addEventListener</code>.
+                <br><strong>Fix:</strong>
+                <pre><code>function handleClick() {
+  console.log("Clicked!");
+}
+btn.addEventListener("click", handleClick);
+btn.removeEventListener("click", handleClick); // Successfully removed!</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q13.4: onclick property vs addEventListener()</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens if you assign two handlers using <code>element.onclick</code> vs <code>element.addEventListener</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><code>element.onclick = fn1; element.onclick = fn2;</code>: The second assignment <strong>overwrites</strong> the first. Only <code>fn2</code> runs.</li>
+                  <li><code>element.addEventListener('click', fn1); element.addEventListener('click', fn2);</code>: Both listeners are registered and both will run when clicked.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q13.5: Arrow Functions and 'this' in DOM Event Listeners</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What is the difference in <code>this</code> between Handler A and Handler B?</div>
+          <pre><code>// Handler A:
+btn.addEventListener("click", function() {
+  console.log("A this:", this);
+});
+
+// Handler B:
+btn.addEventListener("click", () => {
+  console.log("B this:", this);
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">A this: <button> element
+B this: window (or lexical enclosing scope)</div>
+              <div class="explanation-step">
+                In standard functions (Handler A), the browser sets <code>this</code> to the element that fired the listener (the <code>button</code>).
+                Arrow functions (Handler B) do NOT have their own <code>this</code>; they retain the lexical <code>this</code> from the surrounding scope (usually <code>window</code>).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 14: EVENT BUBBLING & DELEGATION
+         ========================================== -->
+    <section id="topic-14" class="topic-section">
+      <div class="topic-header">
+        <h3>14. Event Bubbling & Delegation</h3>
+        <span class="topic-tag">DOM Events</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Event Bubbling:</strong> When an event triggers on an element, it first runs on that element, then bubbles up through its parents up to <code>document</code> and <code>window</code>.</li>
+          <li><strong>Event Delegation:</strong> Attaching a single listener to a common parent element to handle events for all current and future child elements.</li>
+          <li><strong>Events that do NOT bubble:</strong> <code>focus</code>, <code>blur</code>, <code>mouseenter</code>, <code>mouseleave</code>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q14.1: What is Event Delegation and why is it a best practice?</div>
+          <div class="badges"><span class="badge badge-conceptual">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain how Event Delegation works and its 2 major advantages.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                Event Delegation leverages Event Bubbling: instead of attaching 100 listeners to 100 <code>&lt;li&gt;</code> items, you attach <strong>one listener to the parent <code>&lt;ul&gt;</code></strong>.
+                <br><strong>Two Advantages:</strong>
+                <ol>
+                  <li><strong>Memory Optimization:</strong> Only 1 event listener function is allocated in memory.</li>
+                  <li><strong>Dynamic Elements:</strong> If new list items are added dynamically via JavaScript later, they automatically have click functionality without needing new listeners!</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q14.2: Execution Order in Event Bubbling</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Given: <code>&lt;div id="parent"&gt;&lt;button id="child"&gt;Click&lt;/button&gt;&lt;/div&gt;</code><br>What is logged when the button is clicked?</div>
+          <pre><code>document.getElementById("parent").addEventListener("click", () => {
+  console.log("Parent clicked");
+});
+
+document.getElementById("child").addEventListener("click", () => {
+  console.log("Child clicked");
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Child clicked
+Parent clicked</div>
+              <div class="explanation-step">
+                Due to Event Bubbling, the event triggers first on the target element (<code>child</code>), then bubbles up to its parent element (<code>parent</code>).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q14.3: Event Delegation with Nested Child Elements (closest method)</div>
+          <div class="badges"><span class="badge badge-tricky">Practical Implementation</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">If a button contains an icon: <code>&lt;button class="del-btn"&gt;&lt;i&gt;🗑️&lt;/i&gt; Delete&lt;/button&gt;</code>, clicking the icon makes <code>e.target</code> the <code>&lt;i&gt;</code> tag. How do you reliably find the button?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Solution Code</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                Use <strong><code>e.target.closest(selector)</code></strong> to traverse up to the matching parent element:
+                <pre><code>container.addEventListener("click", (e) => {
+  const btn = e.target.closest(".del-btn");
+  if (btn) {
+    console.log("Delete button clicked!");
+  }
+});</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q14.4: What are the 3 Phases of Event Propagation?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Name the three phases and explain how to listen in the Capturing phase.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ol>
+                  <li><strong>Capturing Phase:</strong> Event travels down from <code>window</code> &rarr; <code>document</code> &rarr; ancestors down to the target.</li>
+                  <li><strong>Target Phase:</strong> Event reaches the clicked target element.</li>
+                  <li><strong>Bubbling Phase:</strong> Event travels up from target element back up to <code>window</code>.</li>
+                </ol>
+                By default, listeners run in the Bubbling phase. To listen in Capturing phase, pass <code>true</code> as the 3rd argument:
+                <code>element.addEventListener('click', handler, true)</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q14.5: Name Events that Do NOT Bubble</div>
+          <div class="badges"><span class="badge badge-tricky">Edge Case</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does event delegation fail on <code>focus</code> and <code>mouseenter</code>? What are their bubbling alternatives?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <code>focus</code>, <code>blur</code>, <code>mouseenter</code>, and <code>mouseleave</code> do <strong>not bubble</strong> up the DOM tree.
+                <br><strong>Bubbling Alternatives:</strong>
+                <ul>
+                  <li>For <code>focus</code> / <code>blur</code> &rarr; use <strong><code>focusin</code></strong> and <strong><code>focusout</code></strong> (which bubble!).</li>
+                  <li>For <code>mouseenter</code> / <code>mouseleave</code> &rarr; use <strong><code>mouseover</code></strong> and <strong><code>mouseout</code></strong> (which bubble!).</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 15: STOPPROPAGATION VS PREVENTDEFAULT
+         ========================================== -->
+    <section id="topic-15" class="topic-section">
+      <div class="topic-header">
+        <h3>15. stopPropagation() vs. preventDefault()</h3>
+        <span class="topic-tag">Event Control</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong><code>event.stopPropagation()</code>:</strong> Stops the event from bubbling up to parent ancestors in the DOM tree.</li>
+          <li><strong><code>event.preventDefault()</code>:</strong> Cancels the browser's native default behavior (e.g. form submission refresh, link navigation).</li>
+          <li><strong>Key Fact:</strong> They do completely different things! <code>preventDefault()</code> does <strong>NOT</strong> stop bubbling.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q15.1: Does preventDefault() stop event bubbling?</div>
+          <div class="badges"><span class="badge badge-conceptual">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What happens to parent listeners when a child calls <code>e.preventDefault()</code>?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <strong>NO!</strong>
+                <code>e.preventDefault()</code> only stops native browser actions (like following an <code>&lt;a&gt;</code> link or reloading on form submit).
+                The event <strong>still bubbles up</strong> to parent elements and triggers their listeners. To stop bubbling, you must call <code>e.stopPropagation()</code>.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q15.2: Link Click with preventDefault Inside a Container</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged when the link is clicked?</div>
+          <pre><code>const box = document.getElementById("box");
+const link = document.getElementById("my-link");
+
+box.addEventListener("click", () => {
+  console.log("Box clicked");
+});
+
+link.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("Link clicked");
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Link clicked
+Box clicked</div>
+              <div class="explanation-step">
+                The link's navigation is prevented, but the click event bubbles up to `#box`, executing the box click handler!
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q15.3: Nested Delete Button with stopPropagation()</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged when clicking the delete button?</div>
+          <pre><code>const card = document.getElementById("card");
+const deleteBtn = document.getElementById("del-btn");
+
+card.addEventListener("click", () => {
+  console.log("Open full card details");
+});
+
+deleteBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  console.log("Item deleted");
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Item deleted</div>
+              <div class="explanation-step">
+                Because <code>e.stopPropagation()</code> was called on the button, the event is halted. It does not bubble up to `#card`, preventing `"Open full card details"` from printing.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q15.4: stopPropagation() vs stopImmediatePropagation()</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Distinction</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be printed if <code>e.stopImmediatePropagation()</code> is called in Listener 1?</div>
+          <pre><code>btn.addEventListener("click", (e) => {
+  console.log("Listener 1");
+  e.stopImmediatePropagation();
+});
+
+btn.addEventListener("click", () => {
+  console.log("Listener 2");
+});</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output & Reason</summary>
+            <div class="solution-content">
+              <div class="output-box">Listener 1</div>
+              <div class="explanation-step">
+                <ul>
+                  <li><code>stopPropagation()</code>: Prevents the event from traveling to parent elements, but allows other listeners on the <em>same element</em> to run.</li>
+                  <li><code>stopImmediatePropagation()</code>: Prevents bubbling to parents <strong>AND immediately prevents any remaining listeners on the same element</strong> from running! Listener 2 never executes.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q15.5: Practical Form Submit Handler with preventDefault()</div>
+          <div class="badges"><span class="badge badge-conceptual">Implementation</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Write the standard form submission handler that stops page refresh and sends data via JavaScript:</div>
+          <details class="solution-toggle">
+            <summary>Reveal Code</summary>
+            <div class="solution-content">
+              <pre><code>const form = document.getElementById("login-form");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault(); // Stop default full page reload
+
+  const formData = new FormData(form);
+  const email = formData.get("email");
+  console.log("Submitting email:", email);
+  // Now submit via fetch() asynchronously...
+});</code></pre>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 16: AJAX
+         ========================================== -->
+    <section id="topic-16" class="topic-section">
+      <div class="topic-header">
+        <h3>16. AJAX</h3>
+        <span class="topic-tag">Async Network</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>AJAX:</strong> Asynchronous JavaScript and XML. Updating parts of a web page dynamically in the background without refreshing the whole document.</li>
+          <li><strong>Evolution:</strong> Originally built with <code>XMLHttpRequest</code>; modern applications use the <code>fetch()</code> API.</li>
+          <li><strong>XHR readyStates:</strong> <code>0</code> (Unsent), <code>1</code> (Opened), <code>2</code> (Headers Received), <code>3</code> (Loading), <code>4</code> (Done).</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q16.1: What problem did AJAX solve in web development?</div>
+          <div class="badges"><span class="badge badge-conceptual">Conceptual</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">How does user experience differ between traditional web requests and AJAX requests?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                In traditional web apps, every user interaction (like submitting a form or navigating pages) sent a request to the server, which returned an entire new HTML page. This caused a full screen refresh, losing scroll position and UI state.
+                <br><br>
+                AJAX requests small pieces of data (usually JSON) in the background and modifies only the necessary DOM elements, enabling fast, responsive single-page web applications.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q16.2: What are the 5 readyStates of XMLHttpRequest?</div>
+          <div class="badges"><span class="badge badge-conceptual">XHR Basics</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">List the states from 0 to 4 in an XHR request lifecycle.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ul>
+                  <li><strong>0 (UNSENT):</strong> Client has been created, <code>open()</code> not called yet.</li>
+                  <li><strong>1 (OPENED):</strong> <code>open()</code> has been called.</li>
+                  <li><strong>2 (HEADERS_RECEIVED):</strong> <code>send()</code> called, headers and status are available.</li>
+                  <li><strong>3 (LOADING):</strong> Downloading response body.</li>
+                  <li><strong>4 (DONE):</strong> Operation complete.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q16.3: Basic XMLHttpRequest Pattern</div>
+          <div class="badges"><span class="badge badge-output">Implementation</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Write a classic XHR GET request checking for successful completion:</div>
+          <details class="solution-toggle">
+            <summary>Reveal Code</summary>
+            <div class="solution-content">
+              <pre><code>const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://api.example.com/users", true);
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) { // DONE
+    if (xhr.status === 200) {
+      const data = JSON.parse(xhr.responseText);
+      console.log("Success:", data);
+    } else {
+      console.error("HTTP Error:", xhr.status);
+    }
+  }
+};
+
+xhr.send();</code></pre>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q16.4: Why was fetch() introduced to replace XMLHttpRequest?</div>
+          <div class="badges"><span class="badge badge-conceptual">Evolution</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">List 2 advantages of <code>fetch()</code> over <code>XMLHttpRequest</code>.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                <ol>
+                  <li><strong>Promise-based:</strong> <code>fetch()</code> returns Promises, avoiding callback nesting ("callback hell") and integrating cleanly with modern <code>async/await</code>.</li>
+                  <li><strong>Cleaner API:</strong> Simpler request/response model with built-in streaming body parsers (<code>.json()</code>, <code>.text()</code>, <code>.blob()</code>).</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         TOPIC 17: FETCH() RETURN VALUE & PITFALLS
+         ========================================== -->
+    <section id="topic-17" class="topic-section">
+      <div class="topic-header">
+        <h3>17. fetch() Return Value & Behavior</h3>
+        <span class="topic-tag">Async & Fetch</span>
+      </div>
+
+      <div class="notes-box">
+        <h4>⚡ Quick Revision Notes</h4>
+        <ul>
+          <li><strong>Return Value:</strong> <code>fetch(url)</code> returns a <strong><code>Promise<Response></code></strong>.</li>
+          <li><strong>THE #1 INTERVIEW TRAP:</strong> <code>fetch()</code> <strong>DOES NOT REJECT</strong> on HTTP 404 or 500 status codes!
+            It only rejects if there is a network disconnection, DNS failure, or request abort.
+          </li>
+          <li><strong>Check Status:</strong> Always check <code>response.ok</code> (boolean: true for 200-299) or <code>response.status</code>.</li>
+          <li><strong>Body Stream:</strong> <code>response.json()</code> also returns a Promise and can only be read <strong>once</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="question-card" data-category="conceptual">
+        <div class="q-header">
+          <div class="q-title">Q17.1: Why does fetch() NOT reject on HTTP 404 or 500 errors?</div>
+          <div class="badges"><span class="badge badge-conceptual">High Frequency</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Explain the design rationale behind Promise resolution in the Fetch API.</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                From a network perspective, receiving an HTTP 404 Not Found or 500 Server Error is still a <strong>completed, successful HTTP transaction</strong>: the browser connected to the server, sent headers, and received a valid HTTP response with a status code.
+                <br><br>
+                A Promise should only reject if the operation <em>failed to complete at all</em> (e.g. computer is offline, DNS failure, or request blocked by CORS).
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q17.2: HTTP 404 Bypassing the Catch Block Output</div>
+          <div class="badges"><span class="badge badge-output">Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What will be logged when requesting a non-existent URL?</div>
+          <pre><code>async function checkEndpoint() {
+  try {
+    const res = await fetch("https://httpstat.us/404");
+    console.log("Status:", res.status);
+    console.log("OK:", res.ok);
+  } catch (err) {
+    console.log("Caught in catch:", err.message);
+  }
+}
+
+checkEndpoint();</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Output</summary>
+            <div class="solution-content">
+              <div class="output-box">Status: 404
+OK: false</div>
+              <div class="explanation-step">
+                The `catch` block is <strong>never reached</strong>! The Promise resolves normally, and `res.ok` evaluates to `false` because status 404 is outside the 200–299 range.
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q17.3: Reading Response Body Twice (Stream Disturbed Error)</div>
+          <div class="badges"><span class="badge badge-tricky">Tricky Output</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">What error happens when reading both <code>.text()</code> and <code>.json()</code> from the same response?</div>
+          <pre><code>async function readData(res) {
+  const text = await res.text();
+  const json = await res.json(); // What happens here?
+}</code></pre>
+          <details class="solution-toggle">
+            <summary>Reveal Answer & Fix</summary>
+            <div class="solution-content">
+              <div class="output-box">TypeError: Failed to execute 'json' on 'Response': body stream already read</div>
+              <div class="explanation-step">
+                The body of a Fetch Response is a readable stream. Once consumed by <code>res.text()</code>, the stream is exhausted.
+                <br><strong>Fix:</strong> Clone the response first before reading:
+                <pre><code>const clone = res.clone();
+const text = await res.text();
+const json = await clone.json(); // Works cleanly!</code></pre>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="output">
+        <div class="q-header">
+          <div class="q-title">Q17.4: Production-Safe fetch() Pattern with async/await</div>
+          <div class="badges"><span class="badge badge-output">Best Practice</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Write the standard, error-safe way to handle API requests using <code>fetch()</code>:</div>
+          <details class="solution-toggle">
+            <summary>Reveal Code</summary>
+            <div class="solution-content">
+              <pre><code>async function fetchUserProfile(userId) {
+  try {
+    const response = await fetch(`https://api.example.com/users/${userId}`);
+
+    // Must check response.ok manually!
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const data = await response.json(); // Wait for body parsing
+    return data;
+  } catch (error) {
+    console.error("Request failed:", error.message);
+  }
+}</code></pre>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="question-card" data-category="tricky">
+        <div class="q-header">
+          <div class="q-title">Q17.5: Unexpected HTML Response Parsing Error</div>
+          <div class="badges"><span class="badge badge-tricky">Real-World Trap</span></div>
+        </div>
+        <div class="q-body">
+          <div class="q-text">Why does <code>response.json()</code> throw <code>SyntaxError: Unexpected token '<', "<!DOCTYPE "...</code> when an API fails?</div>
+          <details class="solution-toggle">
+            <summary>Reveal Answer</summary>
+            <div class="solution-content">
+              <div class="explanation-step">
+                When a web server crashes or returns an error page (like a 502 Bad Gateway or 404 page), it often returns an HTML error document starting with <code>&lt;!DOCTYPE html&gt;</code> instead of JSON data.
+                Attempting to parse that HTML string with <code>response.json()</code> fails because the first character <code>&lt;</code> is not valid JSON. Checking <code>response.ok</code> before calling <code>.json()</code> prevents this!
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Live Search
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".question-card");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? "block" : "none";
+      });
+    });
+
+    // Filter by category
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          if (filter === "all") {
+            card.style.display = "block";
+          } else if (filter === "conceptual") {
+            card.style.display = card.dataset.category === "conceptual" ? "block" : "none";
+          } else if (filter === "output") {
+            card.style.display = card.dataset.category === "output" ? "block" : "none";
+          } else if (filter === "tricky") {
+            card.style.display = card.dataset.category === "tricky" ? "block" : "none";
+          }
+        });
+      });
+    });
+
+    // Expand / Collapse All
+    const toggleAllBtn = document.getElementById("toggleAllBtn");
+    let allExpanded = false;
+    toggleAllBtn.addEventListener("click", () => {
+      allExpanded = !allExpanded;
+      const details = document.querySelectorAll("details.solution-toggle");
+      details.forEach(d => {
+        d.open = allExpanded;
+      });
+      toggleAllBtn.textContent = allExpanded ? "📁 Collapse All Solutions" : "📂 Expand All Solutions";
+    });
+
+    // Active state highlighting for sidebar links on scroll
+    window.addEventListener("scroll", () => {
+      const sections = document.querySelectorAll(".topic-section");
+      let currentSectionId = "";
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 140;
+        if (window.scrollY >= top) {
+          currentSectionId = sec.getAttribute("id");
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${currentSectionId}`) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
